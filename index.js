@@ -1,130 +1,98 @@
 const { ethers } = require("ethers");
 
 async function connect() {
-    if (typeof window.ethereum !== "undefined") {
-        try {
-            // metamask will pop up and you can choice which account to connect
-            await ethereum.request({ method: "eth_requestAccounts" });
-        } catch (error) {
-            console.log(error);
-        }
-        document.getElementById("connectButton").innerHTML = "Connected";
-        const accounts = await ethereum.request({ method: "eth_accounts" });
-        console.log(accounts);
-    } else {
-        document.getElementById("connectButton").innerHTML =
-            "Please install MetaMask";
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      // metamask will pop up and you can choice which account to connect
+      await ethereum.request({ method: "eth_requestAccounts" });
+    } catch (error) {
+      console.log(error);
     }
+    document.getElementById("connectButton").innerHTML = "Connected";
+    const accounts = await ethereum.request({ method: "eth_accounts" });
+    console.log(accounts);
+  } else {
+    document.getElementById("connectButton").innerHTML =
+      "Please install MetaMask";
+  }
 }
 
 async function execute() {
-    if (typeof window.ethereum !== "undefined") {
-        contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-        // blueprint to interact with contract
-        const abi = [
-            {
-                inputs: [
-                    {
-                        internalType: "string",
-                        name: "_name",
-                        type: "string",
-                    },
-                    {
-                        internalType: "uint256",
-                        name: "_favoriteNumber",
-                        type: "uint256",
-                    },
-                ],
-                name: "addPerson",
-                outputs: [],
-                stateMutability: "nonpayable",
-                type: "function",
-            },
-            {
-                inputs: [
-                    {
-                        internalType: "string",
-                        name: "",
-                        type: "string",
-                    },
-                ],
-                name: "nameToFavoriteNumber",
-                outputs: [
-                    {
-                        internalType: "uint256",
-                        name: "",
-                        type: "uint256",
-                    },
-                ],
-                stateMutability: "view",
-                type: "function",
-            },
-            {
-                inputs: [
-                    {
-                        internalType: "uint256",
-                        name: "",
-                        type: "uint256",
-                    },
-                ],
-                name: "people",
-                outputs: [
-                    {
-                        internalType: "uint256",
-                        name: "favoriteNumber",
-                        type: "uint256",
-                    },
-                    {
-                        internalType: "string",
-                        name: "name",
-                        type: "string",
-                    },
-                ],
-                stateMutability: "view",
-                type: "function",
-            },
-            {
-                inputs: [],
-                name: "retrieve",
-                outputs: [
-                    {
-                        internalType: "uint256",
-                        name: "",
-                        type: "uint256",
-                    },
-                ],
-                stateMutability: "view",
-                type: "function",
-            },
-            {
-                inputs: [
-                    {
-                        internalType: "uint256",
-                        name: "_favoriteNumber",
-                        type: "uint256",
-                    },
-                ],
-                name: "store",
-                outputs: [],
-                stateMutability: "nonpayable",
-                type: "function",
-            },
-        ];
-        const provider = new ethers.providers.Web3Provider(window.ethereum); // blockchain node connection: RPC_URL or MetaMask
-        const signer = provider.getSigner(); // a transaction need to be siged by signer(a connected account)
-        const contract = new ethers.Contract(contractAddress, abi, signer);
-        try {
-            await contract.store(42);
-        } catch (error) {
-            console.log(error);
-        }
-    } else {
-        document.getElementById("executeButton").innerHTML =
-            "Please install MetaMask";
+  if (typeof window.ethereum !== "undefined") {
+    contractAddress = "0x2a8A3337378d988038071E1B0f6a5940D80e3f42";
+    // blueprint to interact with contract
+    const abi = [
+      {
+        type: "function",
+        name: "addPerson",
+        inputs: [
+          { name: "_name", type: "string", internalType: "string" },
+          {
+            name: "_favoriteNumber",
+            type: "uint256",
+            internalType: "uint256",
+          },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+      },
+      {
+        type: "function",
+        name: "listOfPeople",
+        inputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+        outputs: [
+          {
+            name: "favoriteNumber",
+            type: "uint256",
+            internalType: "uint256",
+          },
+          { name: "name", type: "string", internalType: "string" },
+        ],
+        stateMutability: "view",
+      },
+      {
+        type: "function",
+        name: "nameToFavoriteNumber",
+        inputs: [{ name: "", type: "string", internalType: "string" }],
+        outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+        stateMutability: "view",
+      },
+      {
+        type: "function",
+        name: "retrieve",
+        inputs: [],
+        outputs: [{ name: "", type: "uint256", internalType: "uint256" }],
+        stateMutability: "view",
+      },
+      {
+        type: "function",
+        name: "store",
+        inputs: [
+          {
+            name: "_favoriteNumber",
+            type: "uint256",
+            internalType: "uint256",
+          },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+      },
+    ];
+    const provider = new ethers.providers.Web3Provider(window.ethereum); // blockchain node connection: RPC_URL or MetaMask
+    const signer = provider.getSigner(); // a transaction need to be siged by signer(a connected account)
+    const contract = new ethers.Contract(contractAddress, abi, signer);
+    try {
+      await contract.store(42);
+    } catch (error) {
+      console.log(error);
     }
+  } else {
+    document.getElementById("executeButton").innerHTML =
+      "Please install MetaMask";
+  }
 }
 
 module.exports = {
-    connect,
-    execute,
+  connect,
+  execute,
 };

@@ -11,6 +11,7 @@ git
 Nodejs & npm
 Metamask
 liveserver(vscode extention)
+browserify
 
 Install Nodejs & npm just run
 ```bash
@@ -29,26 +30,18 @@ code .
 - you can run html with js file using liveserver.
 - for installing ethers:
 ```bash
-yarn add ethers
+npm init -y 
+npm install --save ethers@^5.5.3
 ```
-or
-```bash
-npm install --save ethers
-```
-- use a deployed SimpleStorage contract to test, we need abi and contract address.
+- use a deployed SimpleStorage contract to test, we need abi and contract address(sepolia).
 - we need to browserify our javascript, transpile js so front end can understand:
 ```bash
 npm install -g browserify # install tool
-yarn browserify index.js --standalone bundle -o ./dist/bundle.js # transplile index.js into browerified index.js
+browserify index.js --standalone bundle -o ./dist/bundle.js # transplile index.js into browerified index.js
 ```
+5.Use liveserver to run index.html to interact with contract SimpleStorage
 
-
-
-
-
-
-
-
+6.Put project to github
 - add .gitignore file.
 - initialize repository
 - push to github
