@@ -20,6 +20,7 @@ async function connect() {
 async function execute() {
     if (typeof window.ethereum !== "undefined") {
         contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+        // blueprint to interact with contract
         const abi = [
             {
                 inputs: [
@@ -109,8 +110,8 @@ async function execute() {
                 type: "function",
             },
         ];
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = provider.getSigner();
+        const provider = new ethers.providers.Web3Provider(window.ethereum); // blockchain node connection: RPC_URL or MetaMask
+        const signer = provider.getSigner(); // a transaction need to be siged by signer(a connected account)
         const contract = new ethers.Contract(contractAddress, abi, signer);
         try {
             await contract.store(42);
