@@ -19,7 +19,7 @@ async function connect() {
 
 async function execute() {
   if (typeof window.ethereum !== "undefined") {
-    contractAddress = "0x2a8A3337378d988038071E1B0f6a5940D80e3f42";
+    contractAddress = "0x2a8A3337378d988038071E1B0f6a5940D80e3f42"; // SimpleStorage contract which have deployed to sepolia
     // blueprint to interact with contract
     const abi = [
       {
